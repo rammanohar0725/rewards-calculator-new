@@ -1,0 +1,123 @@
+[
+    {
+      "transactionId": "t001",
+      "customerId": "c001",
+      "customerName": "Amit",
+      "purchaseDate": "2023-12-15",
+      "productPurchased": "Laptop",
+      "price": 1200.09
+    },
+    {
+      "transactionId": "t002",
+      "customerId": "c002",
+      "customerName": "Emily",
+      "purchaseDate": "2024-01-16",
+      "productPurchased": "Smartphone",
+      "price": 800
+    },
+    {
+      "transactionId": "t003",
+      "customerId": "c001",
+      "customerName": "Amit",
+      "purchaseDate": "2023-12-18",
+      "productPurchased": "Headphones",
+      "price": 150
+    },
+    {
+      "transactionId": "t004",
+      "customerId": "c003",
+      "customerName": "Rajesh",
+      "purchaseDate": "2024-02-02",
+      "productPurchased": "Tablet",
+      "price": 250
+    },
+    {
+      "transactionId": "t005",
+      "customerId": "c004",
+      "customerName": "Jessica",
+      "purchaseDate": "2024-02-14",
+      "productPurchased": "Camera",
+      "price": 500
+    },
+    {
+      "transactionId": "t006",
+      "customerId": "c005",
+      "customerName": "Priya",
+      "purchaseDate": "2024-03-03",
+      "productPurchased": "E-book Reader",
+      "price": 120.5
+    },
+    {
+      "transactionId": "t007",
+      "customerId": "c002",
+      "customerName": "Emily",
+      "purchaseDate": "2024-03-05",
+      "productPurchased": "Smartwatch",
+      "price": 300
+    },
+    {
+      "transactionId": "t008",
+      "customerId": "c006",
+      "customerName": "Michael",
+      "purchaseDate": "2024-01-25",
+      "productPurchased": "External Hard Drive",
+      "price": 180
+    },
+    {
+      "transactionId": "t009",
+      "customerId": "c001",
+      "customerName": "Amit",
+      "purchaseDate": "2024-01-10",
+      "productPurchased": "Printer",
+      "price": 320
+    },
+    {
+      "transactionId": "t010",
+      "customerId": "c007",
+      "customerName": "Rahul",
+      "purchaseDate": "2024-02-20",
+      "productPurchased": "Monitor",
+      "price": 300
+    },
+    {
+      "transactionId": "t011",
+      "customerId": "c008",
+      "customerName": "Sophia",
+      "purchaseDate": "2024-03-12",
+      "productPurchased": "Desk Chair",
+      "price": 150
+    },
+    {
+      "transactionId": "t012",
+      "customerId": "c009",
+      "customerName": "Vijay",
+      "purchaseDate": "2023-12-11",
+      "productPurchased": "Television",
+      "price": 900
+    },
+    {
+      "transactionId": "t013",
+      "customerId": "c004",
+      "customerName": "Jessica",
+      "purchaseDate": "2024-01-04",
+      "productPurchased": "Coffee Maker",
+      "price": 100
+    },
+    {
+      "transactionId": "t014",
+      "customerId": "c010",
+      "customerName": "Chris",
+      "purchaseDate": "2024-03-18",
+      "productPurchased": "Vacuum Cleaner",
+      "price": 220
+    },
+    {
+      "transactionId": "t015",
+      "customerId": "c011",
+      "customerName": "Anjali",
+      "purchaseDate": "2024-01-23",
+      "productPurchased": "Air Conditioner",
+      "price": 1100
+    }
+  ]
+  
