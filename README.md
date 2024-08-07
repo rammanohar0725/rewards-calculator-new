@@ -24,7 +24,7 @@ Ensure you have Node.js installed on your machine. You can download it from [nod
 
 Clone the repository to your local machine using:
 
-git clone https://github.com/rammanohar0725/rewards-calculator-new
+git clone https://github.com/rammanohar0725/rewards-calculator-new 
 cd rewards-calculator-new
 
 ## Install Dependencies
