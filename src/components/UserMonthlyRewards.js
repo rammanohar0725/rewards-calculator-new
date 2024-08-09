@@ -1,76 +1,80 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { calculateRewards } from '../utils/rewardsCalculator';
 import { getMonthName, getYear } from '../utils/dateHelpers';
-import log from '../utils/logger'; 
+import log from '../utils/logger';
 
 const UserMonthlyRewards = ({ transactions }) => {
-  try {
-    // Log the transactions data received
-    log.debug('Transactions data received for monthly rewards:', transactions);
+  const filteredRewards = useMemo(() => {
+    const currentDate = new Date();
+    const threeMonthsAgo = new Date(currentDate.getFullYear(), currentDate.getMonth() - 2, 1);
 
-    // Aggregate rewards by customer, month, and year
-    const monthlyRewards = transactions.reduce((acc, transaction) => {
-      const { customerId, customerName, purchaseDate, price } = transaction;
+    return transactions
+      .filter(transaction => {
+        const transactionDate = new Date(transaction.purchaseDate);
+        return transactionDate >= threeMonthsAgo;
+      })
+      .sort((a, b) => new Date(a.purchaseDate) - new Date(b.purchaseDate))
+      .reduce((acc, transaction) => {
+        const { customerId, customerName, purchaseDate, price } = transaction;
+        const month = getMonthName(purchaseDate);
+        const year = getYear(purchaseDate);
+        const key = `${month}-${year}`;
 
-      // Log each transaction being processed
-      log.debug('Processing transaction for monthly rewards:', transaction);
-
-      const month = getMonthName(purchaseDate);
-      const year = getYear(purchaseDate);
-      const key = `${customerId}-${month}-${year}`;
-
-      if (!acc[key]) {
-        acc[key] = {
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push({
           customerId,
-          name: customerName,
-          month,
-          year,
-          rewardPoints: 0,
-        };
-        // Log when a new monthly record is added
-        log.debug(`Adding new monthly record for customer: ${customerName}, Month: ${month}, Year: ${year}`);
-      }
+          customerName,
+          purchaseDate,
+          price,
+          rewardPoints: calculateRewards(price),
+        });
 
-      acc[key].rewardPoints += calculateRewards(price);
+        return acc;
+      }, {});
+  }, [transactions]);
 
-      // Log the calculated points for the transaction
-      log.debug(`Customer ${customerName} earned ${calculateRewards(price)} points for transaction of $${price} in ${month}, ${year}`);
-
-      return acc;
-    }, {});
-
-    // Log the final aggregated monthly rewards
-    log.debug('Monthly rewards calculated:', monthlyRewards);
+  try {
+    log.debug('Monthly rewards calculated:', filteredRewards);
 
     return (
       <div>
         <h2>User Monthly Rewards</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Customer ID</th>
-              <th>Name</th>
-              <th>Month</th>
-              <th>Year</th>
-              <th>Reward Points</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.values(monthlyRewards).map((reward) => (
-              <tr key={`${reward.customerId}-${reward.month}-${reward.year}`}>
-                <td>{reward.customerId}</td>
-                <td>{reward.name}</td>
-                <td>{reward.month}</td>
-                <td>{reward.year}</td>
-                <td>{reward.rewardPoints}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {Object.entries(filteredRewards).map(([monthYear, transactions]) => (
+          <div key={monthYear}>
+            <h3>{monthYear}</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>Customer ID</th>
+                  <th>Name</th>
+                  <th>Purchase Date</th>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Reward Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((transaction, index) => (
+                  <tr key={index}>
+                    <td>{transaction.transactionId}</td>
+                    <td>{transaction.customerId}</td>
+                    <td>{transaction.customerName}</td>
+                    <td>{transaction.purchaseDate}</td>
+                    <td>{transaction.productPurchased}</td>
+                    <td>${transaction.price.toFixed(2)}</td>
+                    <td>{transaction.rewardPoints}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
       </div>
     );
   } catch (error) {
-    // Log and display error if an exception occurs
     log.error('Error calculating user monthly rewards:', error);
     return <div>Error calculating user monthly rewards. Please try again later.</div>;
   }

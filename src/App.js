@@ -3,22 +3,21 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import UserMonthlyRewards from './components/UserMonthlyRewards';
 import TotalRewards from './components/TotalRewards';
 import TransactionTable from './components/TransactionTable';
-import TransactionList from './components/TransactionList'; 
+import TransactionList from './components/TransactionList';
 import transactions from './data/transactions.json';
-import log from './utils/logger'; 
+import log from './utils/logger';
+
 function App() {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true); // State for loading
-  const [error, setError] = useState(null); // State for error handling
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    //  data fetching
     const fetchData = async () => {
       try {
         log.debug('Fetching transactions data...');
         setLoading(true);
 
-        //  delay for data fetching
         setTimeout(() => {
           setData(transactions);
           setLoading(false);
@@ -44,19 +43,19 @@ function App() {
             <li><Link to="/">Transactions</Link></li>
             <li><Link to="/monthly-rewards">User Monthly Rewards</Link></li>
             <li><Link to="/total-rewards">Total Rewards</Link></li>
-            <li><Link to="/transaction-list">Edit Transaction List</Link></li> 
+            <li><Link to="/transaction-list">Edit Transaction List</Link></li>
           </ul>
         </nav>
 
-        {loading && <div>Loading...</div>} {/* Display loading indicator */}
-        {error && <div>{error}</div>} {/* Display error message if any */}
+        {loading && <div>Loading...</div>}
+        {error && <div>{error}</div>}
 
-        {!loading && !error && ( // Render content only if not loading and no error
+        {!loading && !error && (
           <Routes>
             <Route path="/" element={<TransactionTable transactions={data} />} />
             <Route path="/monthly-rewards" element={<UserMonthlyRewards transactions={data} />} />
             <Route path="/total-rewards" element={<TotalRewards transactions={data} />} />
-            <Route path="/transaction-list" element={<TransactionList transactions={data} />} /> 
+            <Route path="/transaction-list" element={<TransactionList transactions={data} />} />
           </Routes>
         )}
       </div>

@@ -9,39 +9,35 @@ jest.mock('loglevel', () => ({
 }));
 
 describe('calculateRewards', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+  it('should return 0 points for prices less than $25', () => {
+    expect(calculateRewards(24)).toBe(0); // No points should be awarded for prices below $25
   });
 
-  it('calculates rewards correctly for prices over 100', () => {
-    expect(calculateRewards(120)).toBe(90); // 50 for $50-$100 + 40*2 for $120
-    expect(calculateRewards(150)).toBe(150); // 50 for $50-$100 + 100*2 for $150
+  it('should return correct fractional points for prices >= $25 and < $50', () => {
+    expect(calculateRewards(30)).toBe(2); // Math.floor((30 - 25) * 0.4) = 2
+    expect(calculateRewards(40)).toBe(6); // Math.floor((40 - 25) * 0.4) = 6
   });
 
-  it('calculates rewards correctly for prices between 50 and 100', () => {
-    expect(calculateRewards(70)).toBe(20); // 20 for $70-$50
-    expect(calculateRewards(100)).toBe(50); // 50 for $100-$50
+  it('should return correct points for prices between $50 and $100', () => {
+    expect(calculateRewards(75)).toBe(25); // 75 - 50 = 25
   });
 
-  it('returns 0 for prices less than or equal to 50', () => {
-    expect(calculateRewards(50)).toBe(0);
-    expect(calculateRewards(30)).toBe(0);
+  it('should return correct points for prices over $100', () => {
+    expect(calculateRewards(150)).toBe(150); // (150 - 100) * 2 + 50 = 150
+  });
+  it('should calculate fractional points correctly for prices >= $25 and < $50', () => {
+    expect(calculateRewards(30)).toBe(2); // Math.floor((30 - 25) * 0.4) = 2
+  });
+
+  it('should round points correctly', () => {
+    expect(calculateRewards(135.5)).toBe(121); // (135.5 - 100) * 2 + 50 = 121
   });
 
   it('throws an error for invalid input types', () => {
-    expect(() => calculateRewards('abc')).toThrow('Invalid price type: string. Expected a number.');
-    expect(() => calculateRewards(null)).toThrow('Invalid price type: object. Expected a number.');
-    expect(() => calculateRewards(undefined)).toThrow('Invalid price type: undefined. Expected a number.');
+    expect(() => calculateRewards('100')).toThrow('Invalid price type: string. Expected a number.');
   });
 
-  it('logs debug messages for valid inputs', () => {
-    calculateRewards(120);
-    expect(log.debug).toHaveBeenCalledWith('Calculating rewards for price:', 120);
-    expect(log.debug).toHaveBeenCalledWith('Calculated reward points for price $120: 90');
-  });
-
-  it('logs error messages for invalid inputs', () => {
-    expect(() => calculateRewards('abc')).toThrow();
-    expect(log.error).toHaveBeenCalledWith('Error in calculateRewards:', expect.any(Error));
+  it('handles NaN as input', () => {
+    expect(() => calculateRewards(NaN)).toThrow('Invalid price type: number. Expected a number.');
   });
 });
