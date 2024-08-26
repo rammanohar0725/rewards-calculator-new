@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import { calculateRewards } from '../utils/rewardsCalculator';
-import { getMonthName, getYear } from '../utils/dateHelpers';
-import log from '../utils/logger';
+import { calculateRewards } from './rewardsCalculator';
+import { getMonthName, getYear } from '../../utils/dateHelpers';
+import log from '../../utils/logger';
 
 const UserMonthlyRewards = ({ transactions }) => {
   const filteredRewards = useMemo(() => {
@@ -15,7 +15,7 @@ const UserMonthlyRewards = ({ transactions }) => {
       })
       .sort((a, b) => new Date(a.purchaseDate) - new Date(b.purchaseDate))
       .reduce((acc, transaction) => {
-        const { customerId, customerName, purchaseDate, price } = transaction;
+        const { transactionId, customerId, customerName, purchaseDate, price, productPurchased } = transaction;
         const month = getMonthName(purchaseDate);
         const year = getYear(purchaseDate);
         const key = `${month}-${year}`;
@@ -24,9 +24,11 @@ const UserMonthlyRewards = ({ transactions }) => {
           acc[key] = [];
         }
         acc[key].push({
+          transactionId, // Ensure transactionId is included here
           customerId,
           customerName,
           purchaseDate,
+          productPurchased, // Ensure productPurchased is included
           price,
           rewardPoints: calculateRewards(price),
         });
@@ -59,10 +61,10 @@ const UserMonthlyRewards = ({ transactions }) => {
               <tbody>
                 {transactions.map((transaction, index) => (
                   <tr key={index}>
-                    <td>{transaction.transactionId}</td>
+                    <td>{transaction.transactionId}</td> {/* Ensure transactionId is displayed here */}
                     <td>{transaction.customerId}</td>
                     <td>{transaction.customerName}</td>
-                    <td>{transaction.purchaseDate}</td>
+                    <td>{new Date(transaction.purchaseDate).toLocaleDateString()}</td>
                     <td>{transaction.productPurchased}</td>
                     <td>${transaction.price.toFixed(2)}</td>
                     <td>{transaction.rewardPoints}</td>

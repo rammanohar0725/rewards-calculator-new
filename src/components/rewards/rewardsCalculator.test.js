@@ -1,5 +1,4 @@
 
-import log from 'loglevel';
 import { calculateRewards } from './rewardsCalculator';
 
 // Mock loglevel methods
@@ -40,4 +39,40 @@ describe('calculateRewards', () => {
   it('handles NaN as input', () => {
     expect(() => calculateRewards(NaN)).toThrow('Invalid price type: number. Expected a number.');
   });
+
+   // Additional test cases
+   it('should return 0 points for a price of exactly $0', () => {
+    expect(calculateRewards(0)).toBe(0);
+  });
+
+  it('should return correct points for a price of exactly $25', () => {
+    expect(calculateRewards(25)).toBe(0); // No points for exactly $25
+  });
+
+  it('should return correct points for a price of exactly $50', () => {
+    expect(calculateRewards(50)).toBe(0); // No points for exactly $50
+  });
+
+ 
+  it('should handle negative prices gracefully', () => {
+    expect(calculateRewards(-10)).toBe(0); // No points for negative prices
+  });
+
+  it('should handle very large prices correctly', () => {
+    expect(calculateRewards(1000)).toBe(1850); // (1000 - 100) * 2 + 50 = 1850
+  });
+
+  it('should handle fractional prices correctly', () => {
+    expect(calculateRewards(49.99)).toBe(9); // Math.floor((49.99 - 25) * 0.4) = 9
+  });
+
+  it('should handle edge case of price just below $25', () => {
+    expect(calculateRewards(24.99)).toBe(0); // No points for prices below $25
+  });
+
+  it('should handle edge case of price just below $50', () => {
+    expect(calculateRewards(49.99)).toBe(9); // Math.floor((49.99 - 25) * 0.4) = 9
+  });
+
+
 });

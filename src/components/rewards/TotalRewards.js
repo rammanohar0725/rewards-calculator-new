@@ -1,6 +1,6 @@
 import React from 'react';
-import { calculateRewards } from '../utils/rewardsCalculator';
-import log from '../utils/logger'; 
+import { calculateRewards } from './rewardsCalculator';
+import log from '../../utils/logger'; 
 const TotalRewards = ({ transactions }) => {
   try {
     // Log the transactions data received

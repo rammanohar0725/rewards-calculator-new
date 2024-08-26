@@ -52,12 +52,24 @@ npm start
 ![alt text](image-6.png)
 
 
-## Folder Structure
+## ERROR Response
 
-![alt text](image-3.png)
+![alt text](image-7.png)
+
+
+## folder structure
+
+![alt text](image-8.png)
+
+
+## Expandable Folder Strcture
+
+![alt text](image-9.png)
 
 
 
+## Note:
+If you want to see the error page rename to App.erro.js to App.js. and App.js to make App.back.js
 
 
 

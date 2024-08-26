@@ -1,0 +1,23 @@
+.error-page {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .error-page h2 {
+    font-size: 2em;
+    color: #d9534f;
+  }
+  
+  .error-page p {
+    font-size: 1.2em;
+    color: #333;
+  }
+  
+  .error-page a {
+    font-size: 1.1em;
+    color: #0275d8;
+    text-decoration: none;
+    margin-top: 20px;
+    display: inline-block;
+  }
+  

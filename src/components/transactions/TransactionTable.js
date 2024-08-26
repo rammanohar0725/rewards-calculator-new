@@ -1,7 +1,7 @@
 import React from 'react';  
-import { calculateRewards } from '../utils/rewardsCalculator';
-import { getMonthName } from '../utils/dateHelpers';
-import log from '../utils/logger';
+import { calculateRewards } from '../rewards/rewardsCalculator';
+import { getMonthName } from '../../utils/dateHelpers';
+import log from '../../utils/logger';
 
 const TransactionTable = ({ transactions }) => {
   try {
