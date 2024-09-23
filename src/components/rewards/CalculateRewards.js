@@ -1,6 +1,6 @@
 import log from 'loglevel';
 
-export function calculateRewards(price) {
+export function CalculateRewards(price) {
   try {
     log.debug('Calculating rewards for price:', price); // Log the input price
 

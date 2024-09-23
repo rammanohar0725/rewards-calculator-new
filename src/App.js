@@ -1,38 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import UserMonthlyRewards from './components/rewards/UserMonthlyRewards';
 import TotalRewards from './components/rewards/TotalRewards';
 import TransactionTable from './components/transactions/TransactionTable';
 import TransactionList from './components/transactions/TransactionList';
-import transactions from './data/transactions.json';
-import log from './utils/logger';
-import ErrorPage from './components/errors/ErrorPage'; 
+import UseFetchTransaction from './components/purecomponent/UseFetchTransaction';
+import ErrorPage from './components/errors/ErrorPage';
+import ErrorBoundary from './components/errors/ErrorBoundary'; // Import ErrorBoundary
+
+const timeoutDuration = process.env.REACT_APP_TIMEOUT_DURATION || 1000;
 
 function App() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        log.debug('Fetching transactions data...');
-        setLoading(true);
-
-        setTimeout(() => {
-          setData(transactions);
-          setLoading(false);
-          log.debug('Transactions data fetched successfully:', transactions);
-        }, 1000);
-      } catch (err) {
-        setLoading(false);
-        setError('Error loading data');
-        log.error('Error fetching transactions data:', err);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { data, loading, error } = UseFetchTransaction(timeoutDuration);
 
   return (
     <Router>
@@ -50,15 +29,17 @@ function App() {
         {loading && <div>Loading...</div>}
         
         {error ? (
-          <ErrorPage message={error} /> // Display the error page if an error occurs
+          <ErrorPage message={error} />
         ) : (
           !loading && (
-            <Routes>
-              <Route path="/" element={<TransactionTable transactions={data} />} />
-              <Route path="/monthly-rewards" element={<UserMonthlyRewards transactions={data} />} />
-              <Route path="/total-rewards" element={<TotalRewards transactions={data} />} />
-              <Route path="/transaction-list" element={<TransactionList transactions={data} />} />
-            </Routes>
+            <ErrorBoundary> {/* Wrap with ErrorBoundary */}
+              <Routes>
+                <Route path="/" element={<TransactionTable transactions={data} />} />
+                <Route path="/monthly-rewards" element={<UserMonthlyRewards transactions={data} />} />
+                <Route path="/total-rewards" element={<TotalRewards transactions={data} />} />
+                <Route path="/transaction-list" element={<TransactionList transactions={data} />} />
+              </Routes>
+            </ErrorBoundary>
           )
         )}
       </div>

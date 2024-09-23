@@ -1,7 +1,7 @@
 import React from 'react';  
-import { calculateRewards } from '../rewards/rewardsCalculator';
-import { getMonthName } from '../../utils/dateHelpers';
-import log from '../../utils/logger';
+import { CalculateRewards } from '../rewards/CalculateRewards';
+import { getMonthName } from '../../utils/DateHelpers';
+import log from '../../utils/Logger';
 
 const TransactionTable = ({ transactions }) => {
   try {
@@ -27,7 +27,7 @@ const TransactionTable = ({ transactions }) => {
             {transactions.map((transaction) => {
               log.debug('Processing transaction:', transaction);
 
-              const rewardPoints = calculateRewards(transaction.price);
+              const rewardPoints = CalculateRewards(transaction.price);
               const monthName = getMonthName(transaction.purchaseDate);
 
               return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import { calculateRewards } from './rewardsCalculator';
-import log from '../../utils/logger'; 
+import { CalculateRewards  } from './CalculateRewards';
+import log from '../../utils/Logger'; 
 const TotalRewards = ({ transactions }) => {
   try {
     // Log the transactions data received
@@ -23,7 +23,7 @@ const TotalRewards = ({ transactions }) => {
       }
 
       // Calculate reward points for the current transaction
-      const points = calculateRewards(price);
+      const points = CalculateRewards(price);
       acc[customerId].rewardPoints += points;
 
       // Log the calculated points

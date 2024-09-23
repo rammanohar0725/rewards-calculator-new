@@ -67,6 +67,8 @@ npm start
 ![alt text](image-9.png)
 
 
+## Proof screenshot: 35 test cases executed successfully
+![alt text](image-10.png)
 
 ## Note:
 If you want to see the error page rename to App.erro.js to App.js. and App.js to make App.back.js
@@ -248,3 +250,36 @@ Render the UserMonthlyRewards component with the calculateRewards function mocke
 Verify that an error message is displayed in the component.
 Check that the logger has logged the error message.
 Expected Result: The component should display an error message "Error calculating user monthly rewards. Please try again later." and log the error.
+
+
+## Based on my observations, there are opportunities for improvement in this project
+
+1. Code Quality and Structure
+Modularization
+Current State: Ensure that the code is modular and follows the Single Responsibility Principle (SRP).
+Improvement: Break down large components and functions into smaller, reusable pieces. This makes the code easier to read, test, and maintain.
+Consistent Naming Conventions
+Current State: Evaluate the presence and quality of comments and documentation within the code.
+Improvement: Add meaningful comments and documentation to explain complex logic and the purpose of various modules. Use JSDoc for function and method documentation.
+
+2. Testing
+Test Coverage
+Current State: Review the current test coverage for components, hooks, and utilities.
+Improvement: Aim for high test coverage, including unit tests, integration tests, and end-to-end tests. Use tools like Jest and React Testing Library for testing React components.
+Mocking and Stubbing
+Current State: Evaluate the use of mocks and stubs in tests.
+Improvement: Ensure that external dependencies (e.g., API calls) are properly mocked to isolate tests and make them reliable.
+
+3. Performance and Optimization
+Code Optimization
+Current State: Analyze the performance of key components and functions.
+Improvement: Optimize code for performance, such as reducing unnecessary re-renders in React components, using memoization, and optimizing loops and data structures.
+Bundle Size
+
+4. Security
+Vulnerability Scanning
+Current State: Assess the use of tools for scanning vulnerabilities in dependencies.
+Improvement: Regularly run vulnerability scans using tools like npm audit or Snyk and address any identified issues promptly.
+Secure Coding Practices
+Current State: Evaluate the code for common security issues (e.g., XSS, SQL injection).
+Improvement: Follow secure coding practices, such as input validation, sanitization, and using prepared statements for database queries.

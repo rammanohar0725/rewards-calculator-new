@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import { calculateRewards } from './rewardsCalculator';
-import { getMonthName, getYear } from '../../utils/dateHelpers';
-import log from '../../utils/logger';
+import { CalculateRewards } from './CalculateRewards';
+import { getMonthName, getYear } from '../../utils/DateHelpers';
+import log from '../../utils/Logger';
 
 const UserMonthlyRewards = ({ transactions }) => {
   const filteredRewards = useMemo(() => {
@@ -30,7 +30,7 @@ const UserMonthlyRewards = ({ transactions }) => {
           purchaseDate,
           productPurchased, // Ensure productPurchased is included
           price,
-          rewardPoints: calculateRewards(price),
+          rewardPoints: CalculateRewards(price),
         });
 
         return acc;
