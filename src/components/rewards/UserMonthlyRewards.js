@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { CalculateRewards } from './CalculateRewards';
 import { getMonthName, getYear } from '../../utils/DateHelpers';
-import log from '../../utils/Logger';
+import log from '../../utils/logger';
 
 const UserMonthlyRewards = ({ transactions }) => {
   const filteredRewards = useMemo(() => {
