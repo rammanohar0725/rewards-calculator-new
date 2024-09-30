@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import transactions from '../../data/transactions.json';
-import log from '../../utils/Logger'; 
+import log from '../../utils/Logger';
 
 const UseFetchTransaction = (timeoutDuration = 1000) => { // Default timeout duration is 1000ms
   const [data, setData] = useState([]);
