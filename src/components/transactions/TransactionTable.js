@@ -1,6 +1,6 @@
 import React from 'react';  
 import { CalculateRewards } from '../rewards/CalculateRewards';
-import { getMonthName } from '../../utils/DateHelpers';
+import { getMonthName } from '../../utils/dateHelpers';
 import log from '../../utils/logger';
 
 const TransactionTable = ({ transactions }) => {

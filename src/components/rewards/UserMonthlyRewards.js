@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { CalculateRewards } from './CalculateRewards';
-import { getMonthName, getYear } from '../../utils/DateHelpers';
+import { getMonthName, getYear } from '../../utils/dateHelpers';
 import log from '../../utils/logger';
 
 const UserMonthlyRewards = ({ transactions }) => {
