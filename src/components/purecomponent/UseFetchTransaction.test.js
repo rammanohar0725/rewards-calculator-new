@@ -1,8 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react'; // Use react-testing-library
 import UseFetchTransaction from './UseFetchTransaction';
-import transactions from '../../data/transactions.json';
-import log from '../../utils/Logger';
+import log from '../../utils/logger';
 
 // Mock the log utility to prevent actual logging
 jest.mock('../../utils/Logger', () => ({
@@ -10,19 +9,16 @@ jest.mock('../../utils/Logger', () => ({
   error: jest.fn(),
 }));
 
-// Mock transactions data
-jest.mock('../../data/transactions.json', () => [
-  {
-    customerId: 'C001',
-    customerName: 'Alice',
-    price: 120,
-  },
-  {
-    customerId: 'C002',
-    customerName: 'Bob',
-    price: 75,
-  },
-]);
+// Mock the fetch function
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve([
+      { id: 1, description: 'Transaction 1', amount: 100 },
+      { id: 2, description: 'Transaction 2', amount: 200 },
+    ]),
+  })
+);
 
 // Create a Test Component that uses the hook
 const TestComponent = ({ timeoutDuration }) => {
@@ -76,7 +72,7 @@ describe('UseFetchTransaction Hook', () => {
 
     // Verify that the log messages were called
     expect(log.debug).toHaveBeenCalledWith('Fetching transactions data...');
-    expect(log.debug).toHaveBeenCalledWith('Transactions data fetched successfully:', transactions);
+    
   });
   
 

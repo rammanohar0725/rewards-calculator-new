@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from 'react';
-import transactions from '../../data/transactions.json';
 import log from '../../utils/logger';
 
 const UseFetchTransaction = (timeoutDuration = 1000) => { // Default timeout duration is 1000ms
@@ -13,11 +12,29 @@ const UseFetchTransaction = (timeoutDuration = 1000) => { // Default timeout dur
         log.debug('Fetching transactions data...');
         setLoading(true);
 
+        const response = await fetch('data/transactions.json');
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        const contentType = response.headers.get('content-type');
+        log.debug('Content-Type:', contentType);
+
+        if (!contentType || !contentType.includes('application/json')) {
+          // Log the response text for debugging non-JSON responses
+          const responseText = await response.text();
+          log.error('Non-JSON response:', responseText);
+          throw new TypeError(`Expected JSON response but received: ${contentType}`);
+        }
+
+        const transactions = await response.json();
+
         setTimeout(() => {
           setData(transactions);
           setLoading(false);
           log.debug('Transactions data fetched successfully:', transactions);
         }, timeoutDuration); // Use the dynamic timeout duration
+
       } catch (err) {
         setLoading(false);
         setError('Error loading data');
